@@ -1,11 +1,27 @@
 {
     "version": 2,
-      "framework": null,
-    "functions": {
-        "api/(.*)": { "runtime": "vercel-php@0.6.0" }
-    },
-    "routes": [{
+    "builds": [{ "src": "public/**/*.php", "use": "@vercel/php" }],
+    "routes": [
+      {
         "src": "/(.*)",
-        "dest": "/api/(.*)"
-    }]
-}
+        "dest": "public/index.php",
+        "methods": ["GET", "POST"]
+      }
+    ],
+    "env": {
+      "ASSET_PREFIX": "/public",
+      "APP_KEY": "your-app-key",
+      "DB_HOST": "your-db-host",
+      "DB_PORT": "your-db-port",
+      "DB_DATABASE": "your-db-name",
+      "DB_USERNAME": "your-db-username",
+      "DB_PASSWORD": "your-db-password"
+    },
+    "functions": {
+      "api/index.php": {
+        "runtime": "@vercel/php@0.3.2",
+        "includeFiles": "public/**"
+      }
+    }
+  }
+  
